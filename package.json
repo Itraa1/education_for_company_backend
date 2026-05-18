@@ -11,6 +11,12 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi",
+    "setup-course": "node setup-course.js",
+    "setup-models": "node setup-course.js",
+    "fix-course": "node fix-course-structure.js",
+    "fix-relation": "node fix-relation-error.js",
+    "setup-completion": "node setup-completion-model.js",
+    "setup-roles": "node setup-roles.js",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },

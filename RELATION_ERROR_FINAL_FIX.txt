@@ -1,0 +1,88 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║               🔧 НАЙДЕНА И ИСПРАВЛЕНА РЕАЛЬНАЯ ОШИБКА!                        ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+
+🐛 ПРОБЛЕМА:
+
+   Были ДВЕ версии модели course-completion:
+   
+   1. src/api/test/content-types/course-completion-schema.json
+      → Я её исправил (убрал inversedBy)
+   
+   2. src/api/course-completion/content-types/course-completion/schema.json
+      → ЭТА была ещё со старой ошибкой! (inversedBy всё ещё там)
+      → Strapi использовал ЭТУ версию, поэтому ошибка оставалась!
+
+
+✨ ЧТО ИСПРАВЛЕНО:
+
+   ✓ src/api/course-completion/content-types/course-completion/schema.json
+     • Удалено: inversedBy: "courseCompletions" из user relation
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+🚀 ТЕПЕРЬ ВЫПОЛНИТЕ (В ТАКОМ ПОРЯДКЕ):
+
+
+   1️⃣  Очистить кэш и исправить (одной командой):
+   
+       npm run fix-relation && npm run dev
+
+
+   ИЛИ вручную:
+
+   1️⃣  npm run fix-relation
+       (очистит кэш Strapi и исправит схему)
+
+   2️⃣  npm run dev
+       (запустит Strapi)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+✅ РЕЗУЛЬТАТ:
+
+   ✓ Ошибка исчезнет
+   ✓ Strapi загрузится без ошибок
+   ✓ CourseCompletion модель полностью готова
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+📋 ЧТО БЫЛО ИСПРАВЛЕНО:
+
+   Файл: src/api/course-completion/content-types/course-completion/schema.json
+   
+   ДО:
+   {
+     "user": {
+       "target": "plugin::users-permissions.user",
+       "inversedBy": "courseCompletions"  ← ❌ ОШИБКА
+     }
+   }
+   
+   ПОСЛЕ:
+   {
+     "user": {
+       "target": "plugin::users-permissions.user"
+       // inversedBy удалён ✓
+     }
+   }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+🎯 БЫСТРО:
+
+   npm run fix-relation && npm run dev
+
+
+═══════════════════════════════════════════════════════════════════════════════

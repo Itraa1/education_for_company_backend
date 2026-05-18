@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_completions",
+  "info": {
+    "singularName": "course-completion",
+    "pluralName": "course-completions",
+    "displayName": "Course Completion"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "required": true
+    },
+    "course": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course.course",
+      "inversedBy": "completions",
+      "required": true
+    },
+    "progress": {
+      "type": "integer",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "description": "Progress percentage (0-100)"
+    },
+    "completedAt": {
+      "type": "datetime",
+      "description": "When the course was completed"
+    },
+    "notes": {
+      "type": "text",
+      "description": "User notes about the course"
+    }
+  }
+}
