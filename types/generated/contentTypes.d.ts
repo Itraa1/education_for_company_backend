@@ -499,7 +499,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       ]
     > &
       Schema.Attribute.Required;
-    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    content: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
