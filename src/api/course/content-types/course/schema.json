@@ -69,6 +69,12 @@
       "component": "topic.topic",
       "repeatable": true,
       "required": true
+    },
+    "course_enrollments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-enrollment.course-enrollment",
+      "mappedBy": "course"
     }
   }
 }

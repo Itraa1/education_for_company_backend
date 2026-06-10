@@ -476,6 +476,46 @@ export interface ApiCourseCompletionCourseCompletion
   };
 }
 
+export interface ApiCourseEnrollmentCourseEnrollment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'course_enrollments';
+  info: {
+    displayName: 'course-enrollment';
+    pluralName: 'course-enrollments';
+    singularName: 'course-enrollment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    completed_at: Schema.Attribute.DateTime;
+    completed_topics: Schema.Attribute.JSON;
+    course: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    enrolled_at: Schema.Attribute.DateTime;
+    enrollment_state: Schema.Attribute.Enumeration<
+      ['active', 'completed', 'dropped']
+    >;
+    last_topic_index: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-enrollment.course-enrollment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
@@ -500,6 +540,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Required;
     content: Schema.Attribute.RichText;
+    course_enrollments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-enrollment.course-enrollment'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1022,6 +1066,10 @@ export interface PluginUsersPermissionsUser
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    course_enrollments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-enrollment.course-enrollment'
+    >;
     courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1073,6 +1121,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::course-completion.course-completion': ApiCourseCompletionCourseCompletion;
+      'api::course-enrollment.course-enrollment': ApiCourseEnrollmentCourseEnrollment;
       'api::course.course': ApiCourseCourse;
       'api::test.test': ApiTestTest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
